@@ -81,34 +81,27 @@ def firstTest(sequence):
 
 def secondTest(sequence):
     print("\n\nTest serii")
-    seria = [0, 0, 0, 0, 0, 0]
+    sequence += '0'
     count = 0
-    sequence +='0'
+    series = {}
     for i in range(len(sequence)):
         if sequence[i] == '1':
             count += 1
         else:
-            if count == 1:
-                seria[0] += 1
-            elif count == 2:
-                seria[1] += 1
-            elif count == 3:
-                seria[2] += 1
-            elif count == 4:
-                seria[3] += 1
-            elif count == 5:
-                seria[4] += 1
-            elif count >= 6:
-                seria[5] += 1
+            if count >= 6:
+                series[6] = series.get(6, 0) + 1
+            else:
+                series[count] = series.get(count, 0) + 1
             count = 0
-    print(f"Seria: | przedział | mamy | poprawna?\n",
-          f"   1 | 2315-2685 | {seria[0]} | true\n" if seria[0] >= 2315 and seria[0] <= 2685 else f"1 | 2315-2685 | {seria[0]} | false\n ",
-          f"   2 | 1114-1386 | {seria[1]} | true\n" if seria[1] >= 1114 and seria[1] <= 1386 else f"2 | 1114-1386 | {seria[1]} | false\n ",
-          f"   3 | 527-723   | {seria[2]}  | true\n" if seria[2] >= 527 and seria[2] <= 723 else f"3   | 527-723 | {seria[2]}  | false\n ",
-          f"   4 | 240-384   | {seria[3]}  | true\n" if seria[3] >= 240 and seria[3] <= 384 else f"4   | 240-384 | {seria[3]}  | false\n ",
-          f"   5 | 103-209   | {seria[4]}  | true\n" if seria[4] >= 103 and seria[4] <= 209 else f"5   | 103-209 | {seria[4]}  | false\n ",
-          f"   6 | 103-209   | {seria[5]}  | true\n" if seria[5] >= 103 and seria[5] <= 209 else f"6   | 103-209 | {seria[5]}  | false\n")
 
+    intervals = {1: (2315, 2685), 2: (1114, 1386), 3: (527, 723), 4: (240, 384), 5: (103, 209), 6: (103, 209)}
+
+    print("Seria | przedział | mamy | poprawna?")
+    for length, interval in intervals.items():
+        count = series.get(length, 0)
+        lower, upper = interval
+        result = "true" if lower <= count <= upper else "false"
+        print(f"    {length} | {lower}-{upper} | {count} | {result}")
 
 
 def thirdTest(sequence):
