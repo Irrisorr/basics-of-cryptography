@@ -2,7 +2,7 @@ import math
 import random
 
 
-#================= 1.	Wyznacz	wartość	iloczynu	N	dwóch	dużych	liczb	pierwszych,	takich	że:
+#================= 1. Wyznacz wartość iloczynu N dwóch dużych liczb	pierwszych, takich że:
 
 def getBlum(p, q):
     return p * q
@@ -55,7 +55,7 @@ def getX(n):
 
 
 # =========================================== 3. Wyznacz	wartość	pierwotną	generatora:
-# ============================================ 4. ================================  Powtarzaj w pętli
+# ============================================ 4.  Powtarzaj w pętli
 
 def generateSequence(x, n):
     random_sequence = ''
@@ -70,7 +70,7 @@ def generateSequence(x, n):
 # ================================================================== Test pojedynczych bitów
 
 def firstTest(sequence):
-    print("\n\nTest pojedynczych bitów")
+    print("\n\n>==================> Test pojedynczych bitów <================<")
     bit = sequence.count('1')
     print(f"W ciągu mamy - {bit} jedynek")
     print("musi być 9725 < n(1) < 10275 -> ", end="")
@@ -80,7 +80,7 @@ def firstTest(sequence):
 # ================================================================== Test serii
 
 def secondTest(sequence):
-    print("\n\nTest serii")
+    print("\n\n>==================> Test serii <=================<")
     sequence += '0'
     count = 0
     series = {}
@@ -104,8 +104,29 @@ def secondTest(sequence):
         print(f"    {length} | {lower}-{upper} | {count} | {result}")
 
 
+# ===================================================== Test długiej serii
+
 def thirdTest(sequence):
-    print("\n\nTest serii")
+    print("\n\n>==================> Test długiej serii <=================<")
+    sequence += '0'
+    count = 0
+    max = 0
+    char = sequence[0]
+    for i in range(1, len(sequence)):
+        if char == sequence[i]:
+            count += 1
+            if count >= 26:
+                print(f"Seria przekroczyła 26 '{char}' - ciag jest błędny")
+                break
+        else:
+            if count > max:
+                max = count
+            count = 0
+            char = sequence[i]
+    print(f"Ciag jest poprawny\nNajdłuższa seria ma {max} '{char}'")
+
+
+
 
 # ==========================================================================================================
 
@@ -125,5 +146,7 @@ if __name__ == "__main__":
     print(f"Sequence length: {len(random_sequence)}")
 
 
+
     firstTest(random_sequence)
     secondTest(random_sequence)
+    thirdTest(random_sequence)
