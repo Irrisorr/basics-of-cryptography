@@ -126,6 +126,27 @@ def thirdTest(sequence):
     print(f"Ciag jest poprawny\nNajdłuższa seria ma {max} '{char}'")
 
 
+# =========================================================== Test pokerowy
+
+def fourthTest(sequence):
+    print("\n\n>==================> Test pokerowy <================<")
+    segment = 5000
+    segments = [sequence[i:i + 4] for i in range(0, len(sequence), 4)]
+    segment_counts = [segments.count(bin(i)[2:].zfill(4)) for i in range(2 ** 4)]
+
+    x = (16.0 / segment) * sum(count ** 2 for count in segment_counts) - segment
+
+    for i in range(4):
+        print(f"{bin(i)[2:].zfill(4)}: {segment_counts[i]}\t {bin(i+1)[2:].zfill(4)}: {segment_counts[i+1]}\t "
+              f"{bin(i+2)[2:].zfill(4)}: {segment_counts[i+2]}\t {bin(i+3)[2:].zfill(4)}: {segment_counts[i+3]}")
+    print()
+
+    print(f"X = {x}")
+    print("2.16 < X < 46.17 -> ", end="")
+    print(True) if 2.16 < x < 46.17 else print(False)
+
+
+
 
 
 # ==========================================================================================================
@@ -150,3 +171,4 @@ if __name__ == "__main__":
     firstTest(random_sequence)
     secondTest(random_sequence)
     thirdTest(random_sequence)
+    fourthTest(random_sequence)
