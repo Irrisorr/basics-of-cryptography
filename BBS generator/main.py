@@ -9,7 +9,7 @@ def getBlum(p, q):
 
 
 def inputNumbers():
-    print("Write here first number (p) -> ", end="") 
+    print("Write here first number (p) -> ", end="")
     num_1 = int(input())
     print("Write here second number (q) -> ", end="")
     num_2 = int(input())
@@ -33,7 +33,7 @@ def findNearestPrime(num):
 
     if abs(x1-num) < (x2 - num):
         return x1
-    else: return x2 
+    else: return x2
 
 
 def isPrime(num):
@@ -44,17 +44,32 @@ def isPrime(num):
     return True
 
 
-# ===================== 2.	Wybierz	w	sposób	losowy	taką	liczbę	x taką, że	x i	N są	względnie	pierwsze
+# ===================== 2.	Wybierz	w sposób losowy taką liczbę	x taką, że x i N są	względnie pierwsze
 
 
 def getX(n):
     while True:
-        x = random.randint(2, n*10)
-        if math.gcd(x, n) == 1:
+        x = random.randint(2, n**2)
+        if math.gcd(x, n) == 1 and chechX(x):
             return x
 
 
-# =========================================== 3. Wyznacz	wartość	pierwotną	generatora:
+def chechX(x):
+    random_sequence = ''
+    for i in range(0, 20000):
+        x = pow(x, 2) % n
+        random_sequence += '1' if x & 1 else '0'
+
+    segment = 5000
+    segments = [random_sequence[i:i + 4] for i in range(0, len(random_sequence), 4)]
+    segment_counts = [segments.count(bin(i)[2:].zfill(4)) for i in range(2 ** 4)]
+
+    x = (16.0 / segment) * sum(count ** 2 for count in segment_counts) - segment
+    if 2.16 < x < 46.17: return True
+    else: return False
+
+
+# =========================================== 3. Wyznacz wartość pierwotną generatora:
 # ============================================ 4.  Powtarzaj w pętli
 
 def generateSequence(x, n):
@@ -152,6 +167,7 @@ def fourthTest(sequence):
 # ==========================================================================================================
 
 if __name__ == "__main__":
+
 
     p, q = inputNumbers()
     print(f"p = {p}, q = {q}")
