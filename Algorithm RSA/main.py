@@ -70,7 +70,16 @@ def getD(e, phi):
     return pow(e, -1, phi)
 
 
+# ========================== szyfrowanie RSA
 
+def encrypt(m, e, n):
+    return pow(m, e) % n
+
+
+# ========================== deszyfrowanie RSA
+
+def decrypt(c, d, n):
+    return pow(c, d) % n
 
 
 
@@ -89,6 +98,14 @@ def main():
 
     d = getD(e, phi)
     print(f"Private key = {d}, {n}")
+
+    m = int(input("Enter message: "))
+    c = encrypt(m, e, n)
+    print(f"Encrypted message: {c}")
+
+    m = decrypt(c, d, n)
+    print(f"Decrypted message: {m}")
+
 
 
 if __name__ == "__main__":
