@@ -97,6 +97,39 @@ def checkHashCollisions(hash_func, num_bits=12):
             collisions[skrot] = text
 
 
+"""
+6. Losowość wyjścia funkcji skrótu (kryterium SAC – Strict Avalanche Criteria) – 
+przy zmianie pojedynczego bitu na wejściu, wszystkie bity wyjściowe powinny 
+zmienić się z prawdopodobieństwem 0,5 każdy. 
+Dla wybranej funkcji skrótu zbadaj tę własność
+"""
+
+
+def checkSAC(hash_func, word):
+    print("\nWlasnosc kryterium SAC dla funkcji " + hash_func.__name__.upper()[8:])
+    firstHash = generateHash(word.encode(), hash_func)
+    hashLength = len(firstHash) * 4
+    bitChanges = [0] * hashLength
+
+    for i in range(len(word)):
+        for bit in range(8):
+            newWord = word[:i] + chr(ord(word[i]) ^ (1 << bit)) + word[i + 1:]
+            newHash = generateHash(newWord.encode(), hash_func)
+
+            origBits = int(firstHash, 16)
+            newBits = int(newHash, 16)
+            bitDiff = bin(origBits ^ newBits).count('1')
+
+            for j in range(hashLength):
+                bitChanges[j] += ((newBits ^ origBits) >> j) & 1
+
+    totalTrials = len(word) * 8
+    for i in range(hashLength):
+        bitChanges[i] /= totalTrials
+    print(bitChanges)
+
+
+
 
 
 
@@ -127,6 +160,9 @@ def main():
 
     print("\n\n>=============> Zadanie 5. <============<")
     checkHashCollisions(hashlib.md5)
+
+    print("\n\n>=============> Zadanie 6. <============<")
+    checkSAC(hashlib.sha256, word)
 
 
 
