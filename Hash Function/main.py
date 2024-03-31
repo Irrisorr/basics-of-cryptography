@@ -64,7 +64,37 @@ Co można powiedzieć o bezpieczeństwie skrótów z krótkich haseł składowan
 """
 
 
+def findHashMD5(word, filename):
+    hash = generateHash(word.encode(), hashlib.md5)
+    with open(filename, 'r') as file:
+        for line in file:
+            line = line.strip()
+            if generateHash(line.encode(), hashlib.md5) == hash:
+                print(f"Znaleziono słowo: {line}")
+                return
+    print("Nie znaleziono słowa w pliku.")
 
+
+"""
+5. Dla wybranej przez siebie funkcji skrótu, zbadaj kolizje na pierwszych 12 bitach	skrótu.
+"""
+
+
+def checkHashCollisions(hash_func, num_bits=12):
+    print("\n Kolizje na pierwszych 12 bitach dla funkcji " + hash_func.__name__.upper()[8:])
+    collisions = {}
+    count = 0
+    while True:
+        count += 1
+        text = "".join(random.choices(string.ascii_letters + string.digits, k=4))
+        hashValue = generateHash(text.encode(), hash_func)
+        skrot = hashValue[:num_bits//4]
+
+        if skrot in collisions:
+            print(f"Kolizja {skrot} znaleziona po {count} probach u {text} i {collisions[skrot]}")
+            break
+        else:
+            collisions[skrot] = text
 
 
 
@@ -91,6 +121,12 @@ def main():
     compareHashFunctions(words, hash_functions)
 
     print("\n\n>=============> Zadanie 3. <============<")
+    word = ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(1, 4)))
+    print(f"Word: {word}")
+    print(f"Hash: {generateHash(word.encode(), hashlib.md5)}")
+
+    print("\n\n>=============> Zadanie 5. <============<")
+    checkHashCollisions(hashlib.md5)
 
 
 
