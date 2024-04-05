@@ -126,7 +126,12 @@ def checkSAC(hash_func, word):
     totalTrials = len(word) * 8
     for i in range(hashLength):
         bitChanges[i] /= totalTrials
-    print(bitChanges)
+    print(bitChanges, end="\n\n")
+
+    sum = 0
+    for i in range(len(bitChanges)):
+        sum += bitChanges[i]
+    print(f"Probability = {sum/len(bitChanges)}")
 
 
 
@@ -150,7 +155,7 @@ def main():
 
     print("\n\n>=============> Zadanie 2. <============<")
     words = ["Kot", ''.join(random.choices(string.ascii_letters + string.digits, k=1000)),
-                    ''.join(random.choices(string.ascii_letters + string.digits, k=10000))]
+                    ''.join(random.choices(string.ascii_letters + string.digits, k=100000))]
     compareHashFunctions(words, hash_functions)
 
     print("\n\n>=============> Zadanie 3. <============<")
@@ -162,7 +167,7 @@ def main():
     checkHashCollisions(hashlib.md5)
 
     print("\n\n>=============> Zadanie 6. <============<")
-    checkSAC(hashlib.sha256, word)
+    checkSAC(hashlib.md5, word)
 
 
 
