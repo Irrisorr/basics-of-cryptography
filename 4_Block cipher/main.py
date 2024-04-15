@@ -3,6 +3,13 @@ import time
 import os
 
 
+"""
+==============================================================================================================
+1. Przeanalizuj dostępne tryby pracy szyfrów blokowych w wybranym środowisku programowania i 
+zmierz czasy szyfrowania i deszyfrowania dla 3 różnej wielkości plików we wszystkich 5 podstawowych trybach 
+ECB, CBC, OFB, CFB, i CTR. Zinterpretuj otrzymane wyniki.
+==============================================================================================================
+"""
 def encrypt(cipher, data):
     cipher = Cipher(algorithms.AES(os.urandom(32)), cipher)
     encryptor = cipher.encryptor()
