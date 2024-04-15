@@ -84,17 +84,19 @@ def checkHashCollisions(hash_func, num_bits=12):
     print("\n Kolizje na pierwszych 12 bitach dla funkcji " + hash_func.__name__.upper()[8:])
     collisions = {}
     count = 0
-    while True:
-        count += 1
-        text = "".join(random.choices(string.ascii_letters + string.digits, k=4))
-        hashValue = generateHash(text.encode(), hash_func)
-        skrot = hashValue[:num_bits//4]
+    for i in range(20):
+        while True:
+            count += 1
+            text = "".join(random.choices(string.ascii_letters + string.digits, k=4))
+            hashValue = generateHash(text.encode(), hash_func)
+            skrot = hashValue[:num_bits//4]
 
-        if skrot in collisions:
-            print(f"Kolizja {skrot} znaleziona po {count} probach u {text} i {collisions[skrot]}")
-            break
-        else:
-            collisions[skrot] = text
+            if skrot in collisions:
+                print(f"Kolizja {skrot} znaleziona po {count} probach u {text} i {collisions[skrot]}")
+                count = 0
+                break
+            else:
+                collisions[skrot] = text
 
 
 """
