@@ -4,13 +4,23 @@ import os
 
 
 def encrypt(cipher, data):
-    start_time = time.time()
     cipher = Cipher(algorithms.AES(os.urandom(32)), cipher)
     encryptor = cipher.encryptor()
+    start_time = time.time()
     encrypted_data = encryptor.update(data) + encryptor.finalize()
     encrypt_time = time.time() - start_time
 
     return encrypt_time, encrypted_data
+
+
+def decrypt(cipher, encrypted_data):
+    cipher = Cipher(algorithms.AES(os.urandom(32)), cipher)
+    decryptor = cipher.decryptor()
+    start_time = time.time()
+    decrypted_data = decryptor.update(encrypted_data) + decryptor.finalize()
+    decrypt_time = time.time() - start_time
+
+    return decrypt_time, decrypted_data
 
 
 
@@ -27,9 +37,12 @@ def main():
         print(f"\nLength of data: {len(data)} bytes")
         for cipher in ciphers:
             encrypt_time, encrypted_data = encrypt(cipher, data)
-            print(f"{cipher.__class__.name}:")
+            decrypt_time, decrypted_data = decrypt(cipher, encrypted_data)
+            print(f"\nCipher: {cipher.__class__.name}")
             print(f"  Time of encryption: {encrypt_time:.6f} sec")
+            print(f"  Time of decryption: {decrypt_time:.6f} sec")
             print(f"  Encrypted data: {encrypted_data.hex()[:32]}...")
+            print(f"  Decrypted data: {decrypted_data.hex()[:32]}...")
 
 
 
